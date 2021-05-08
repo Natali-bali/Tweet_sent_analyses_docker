@@ -1,0 +1,45 @@
+version: '3'
+services:
+  tweet_collector:
+    build: tweet_collector/
+    container_name: tweet_collector
+    volumes:
+    - ./tweet_collector/:/mycode/
+    links:
+    - mongodb
+  etl_job:
+    build: etl_job/
+    container_name: etl_job
+    volumes:
+    - ./etl_job/:/my_code/
+    links:
+    - mongodb
+    - postgresdb
+  mongodb:
+    image: mongo
+    ports:
+    - 27017:27017
+    container_name: mongodb
+  postgresdb:
+    image: postgres
+    ports:
+    - "5555:5432"
+    container_name: tweet_psql
+    environment:
+    - POSTGRES_USER=user
+    - POSTGRES_PASSWORD=111111
+    - POSTGRES_DB=tweets
+  metabase:
+    image: metabase/metabase
+    ports:
+    - 3001:3000
+    container_name: metabase
+    links:
+    - postgresdb
+    # environment:
+    # - MB_DB_TYPE=postgres
+    # - MB_DB_DBNAME=tweets
+    # - MB_DB_PORT=5555
+    # - MB_DB_USER=user
+    # - MB_DB_PASS=111111
+    # - MB_DB_HOST=postgresdb
