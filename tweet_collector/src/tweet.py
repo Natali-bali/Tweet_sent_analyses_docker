@@ -9,7 +9,7 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 
 username='ko.natalia.de@gmail.com'
-password='89218921'
+password='1111111'
 # client_atlas = pymongo.MongoClient(f"mongodb+srv://{username}:{password}@basilcluster-eoh28.mongodb.net/test?retryWrites=true")
 client = pymongo.MongoClient("mongodb") #connected to mongo
 try:
